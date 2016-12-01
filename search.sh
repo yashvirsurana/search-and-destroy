@@ -1,16 +1,8 @@
 #!/bin/bash
 
-ssh -q $2 ARG2=$2 ARG1=$1 'bash -s' <<'ENDSSH'
+rm -r outdir/
 
-    name=$(finger | head -2 | tail -1 | cut -d' ' -f3)
-    # echo $name
-    # echo "SSHING INTO >>> " $ARG2
-    # echo $ARG1
-    name=$(echo $name | tr A-Z a-z)
-    # echo $name
-    if [ $name = $ARG1 ]
-    then
-        hostname | cut -d'.' -f1
-    fi
-ENDSSH
-true
+pssh -h drill_hall -o outdir /afs/inf.ed.ac.uk/user/s13/s1341139/git/search-and-destroy/get_name.sh $1
+
+cat outdir/*
+rm -r outdir/
